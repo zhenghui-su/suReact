@@ -1,25 +1,25 @@
 {
-	"compileOnSave": true,
-	"include": ["./packages/**/*"],
+	"compileOnSave": true, // 在保存时自动编译
+	"include": ["./packages/**/*"], // 包含的文件或目录
 	"compilerOptions": {
-		"target": "ESNext",
-		"useDefineForClassFields": true,
-		"module": "ESNext",
-		"lib": ["ESNext", "DOM"],
-		"moduleResolution": "Node",
-		"strict": true,
-		"sourceMap": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"noEmit": true,
-		"noUnusedLocals": false,
-		"noUnusedParameters": false,
-		"noImplicitReturns": false,
-		"skipLibCheck": true,
-		"baseUrl": "./packages",
+		"target": "ESNext", // 编译目标为 ESNext 版本
+		"useDefineForClassFields": true, // 使用类字段的定义方式
+		"module": "ESNext", // 使用 ESNext 模块系统
+		"lib": ["ESNext", "DOM"], // 引入的库文件，包括 ESNext 和 DOM
+		"moduleResolution": "Node", // 模块解析方式为 Node
+		"strict": true, // 启用严格模式
+		"sourceMap": true, // 生成源映射文件
+		"resolveJsonModule": true, // 解析 JSON 模块
+		"isolatedModules": true, // 将每个文件作为独立的模块进行编译
+		"esModuleInterop": true, // 启用模块间的互操作性
+		"noEmit": true, // 不生成输出文件
+		"noUnusedLocals": false, // 允许存在未使用的局部变量
+		"noUnusedParameters": false, // 允许存在未使用的函数参数
+		"noImplicitReturns": false, // 允许存在缺少返回值的函数
+		"skipLibCheck": true, // 跳过对声明文件的检查
+		"baseUrl": "./packages", // 基本路径（用于解析非相对模块名）
 		"paths": {
-			"hostConfig": ["./react-dom/src/hostConfig.ts"]
+			"hostConfig": ["./react-dom/src/hostConfig.ts"] // 自定义模块名映射路径
 		}
 	}
 }
