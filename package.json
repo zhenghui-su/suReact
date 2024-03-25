@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"lint": "eslint --ext .js,.ts,.jsx,.tsx --fix --quiet ./packages"
+		"lint": "eslint --ext .js,.ts,.jsx,.tsx --fix --quiet ./packages",
+		"build:dev": "rimraf dist && rollup --bundleConfigAsCjs --config scripts/rollup/react.config.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -12,6 +13,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^19.2.1",
 		"@commitlint/config-conventional": "^19.1.0",
+		"@rollup/plugin-commonjs": "^25.0.7",
 		"@typescript-eslint/eslint-plugin": "^5.40.0",
 		"@typescript-eslint/parser": "^5.40.0",
 		"commitlint": "^19.2.1",
@@ -20,7 +22,10 @@
 		"eslint-plugin-prettier": "^4.2.1",
 		"husky": "^8.0.1",
 		"prettier": "^2.7.1",
+		"rimraf": "^5.0.5",
 		"rollup": "^4.13.0",
+		"rollup-plugin-generate-package-json": "^3.2.0",
+		"rollup-plugin-typescript2": "^0.36.0",
 		"typescript": "^4.8.4"
 	}
 }
