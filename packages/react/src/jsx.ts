@@ -4,7 +4,7 @@ import {
 	Key,
 	Ref,
 	Props,
-	ReactElement,
+	ReactElementType,
 	ElementType
 } from 'shared/ReactTypes';
 
@@ -16,7 +16,7 @@ const ReactElement = function (
 	key: Key,
 	ref: Ref,
 	props: Props
-): ReactElement {
+): ReactElementType {
 	const element = {
 		$$typeof: REACT_ELEMENT_TYPE, // React 元素类型标识
 		type, // 元素的类型

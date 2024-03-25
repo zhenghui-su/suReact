@@ -6,7 +6,7 @@ export type Props = any;
 export type ElementType = any;
 
 // 定义 ReactElement 接口
-export interface ReactElement {
+export interface ReactElementType {
 	$$typeof: symbol | number; // React 元素类型标识
 	type: ElementType; // 元素的类型
 	key: Key; // 元素的键
