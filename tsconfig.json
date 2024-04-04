@@ -19,7 +19,8 @@
 		"skipLibCheck": true, // 跳过对声明文件的检查
 		"baseUrl": "./packages", // 基本路径（用于解析非相对模块名）
 		"paths": {
-			"hostConfig": ["./react-dom/src/hostConfig.ts"] // 自定义模块名映射路径
+			// 自定义模块名映射路径, 这样就不仅局限在一个包下面了
+			"hostConfig": ["./react-reconciler/src/hostConfig.ts"]
 		}
 	}
 }
