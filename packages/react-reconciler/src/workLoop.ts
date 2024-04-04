@@ -1,24 +1,58 @@
-import { FiberNode } from './fiber';
+import { FiberNode, FiberRootNode, createWorkInProgress } from './fiber';
 import { beginWork } from './beginWork';
 import { completeWork } from './completeWork';
+import { HostRoot } from './workTags';
 
-// 全局变量，表示当前正在处理的 Fiber 节点
+/** 全局变量，表示当前正在处理的 Fiber 节点 */
 let workInProgress: FiberNode | null = null;
 
 /**
  * 准备一个新的工作栈，开始处理给定的 Fiber 节点
- * @param fiber 要处理的根 Fiber 节点
+ * @param root 要处理的根 Fiber 节点
  */
-function prepareFreshStack(fiber: FiberNode) {
+function prepareFreshStack(root: FiberRootNode) {
 	// 将给定的 Fiber 节点设置为工作栈的起点
-	workInProgress = fiber;
+	workInProgress = createWorkInProgress(root.current, {});
+}
+
+/**
+ * 在给定的 Fiber 节点上调度更新
+ * @param fiber 要调度更新的 Fiber 节点
+ */
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+	// TODO 实现调度功能
+	/** 获取根 Fiber 节点 */
+	const root = markUpdateFromFiberToRoot(fiber);
+	/** 渲染根节点 */
+	renderRoot(root);
+}
+
+/**
+ * 从给定的 Fiber 节点追溯到根节点，标记更新
+ * @param fiber 给定的 Fiber 节点
+ * @returns 标记更新的根 Fiber 节点
+ */
+function markUpdateFromFiberToRoot(fiber: FiberNode) {
+	// 从给定的 Fiber 节点开始向上遍历，直到找到根节点为止
+	let node = fiber;
+	let parent = node.return;
+	while (parent !== null) {
+		node = parent;
+		parent = node.return;
+	}
+	// 如果找到的根节点是 HostRoot 类型，则返回其对应的 FiberRootNode
+	if (node.tag === HostRoot) {
+		return node.stateNode;
+	}
+	// 如果未找到根节点或根节点不是 HostRoot 类型，则返回 null
+	return null;
 }
 
 /**
  * 渲染根节点，启动 React 协调器的工作循环
  * @param root 根节点的 Fiber 节点
  */
-function renderRoot(root: FiberNode) {
+function renderRoot(root: FiberRootNode) {
 	// 初始化工作栈
 	prepareFreshStack(root);
 
