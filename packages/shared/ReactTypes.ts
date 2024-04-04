@@ -14,3 +14,9 @@ export interface ReactElementType {
 	props: Props; // 元素的属性
 	__mark: string; // 自定义标记
 }
+
+/**
+ * 表示状态更新的动作类型，可以是直接的状态值或者一个函数
+ * @template State 状态的类型
+ */
+export type Action<State> = State | ((prevState: State) => State);
