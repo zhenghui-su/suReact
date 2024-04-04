@@ -108,3 +108,35 @@ E F G     H I J
 10. 循环处理节点 H，I，J。
 11. 当节点 H，I，J 的工作单元完成后，将处理节点 D 的工作单元完成。
 12. 工作栈为空，循环结束。
+
+## ReactDOM.createRoot().render() 模拟流程
+
+如下图
+
+![image-20240404233832703](https://chen-1320883525.cos.ap-chengdu.myqcloud.com/img/image-20240404233832703.png)
+
+### 流程
+
+1. **创建根容器：**
+   - 使用 `createContainer` 函数创建根容器，并与根节点相关联。
+   - `createContainer` 函数内部创建了一个 `FiberRootNode` 对象，并初始化了根 Fiber 节点，并将其与容器关联起来。
+2. **触发更新：**
+   - 当执行 `ReactDOM.createRoot().render()` 时，实际上调用了 `updateContainer` 函数。
+   - `updateContainer` 函数会创建更新对象，并将其加入到根节点的更新队列中。
+   - 然后，调用 `scheduleUpdateOnFiber` 函数来触发更新调度。
+3. **标记更新并开始渲染：**
+   - `scheduleUpdateOnFiber` 函数会标记更新，并调用 `renderRoot` 函数来开始渲染根节点。
+   - `renderRoot` 函数准备工作栈，并进入循环处理工作单元的过程。
+4. **循环处理工作单元：**
+   - 在循环中，调用 `performUnitOfWork` 函数执行当前工作单元。
+   - `performUnitOfWork` 函数会开始处理当前工作单元，并获取下一个要处理的工作单元。
+   - 如果没有下一个工作单元，则调用 `completeUnitOfWork` 函数完成当前工作单元。
+   - 如果有下一个工作单元，则将全局变量 `workInProgress` 更新为下一个工作单元，并继续循环处理。
+
+### 代码关联
+
+- `createContainer`、`updateContainer` 函数调用了 `FiberRootNode` 的相关方法和属性，与 `fiber.ts` 中的定义关联。
+- `scheduleUpdateOnFiber`、`renderRoot`、`workLoop`、`performUnitOfWork`、`completeUnitOfWork` 等函数实现了更新调度和渲染的逻辑，与 `workLoop.ts` 中的代码关联。
+- `markUpdateFromFiberToRoot` 函数用于标记更新的起点，与 `workLoop.ts` 中的代码关联。
+- 这些函数都依赖于 `FiberNode`、`FiberRootNode` 类的定义，与 `fiber.ts` 中的代码关联。
+- `createContainer` 和 `updateContainer` 函数中使用了更新队列相关的方法和属性，与 `updateQueue.ts` 中的代码关联。
