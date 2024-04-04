@@ -64,3 +64,4 @@
   ![image-20240402163524432](https://chen-1320883525.cos.ap-chengdu.myqcloud.com/img/image-20240402163524432.png)
 
 - FiberNode 节点, 工作循环 DFS
+- 接入更新机制, FiberRootNode 节点, 创建根容器和更新容器
