@@ -65,3 +65,5 @@
 
 - FiberNode 节点, 工作循环 DFS
 - 接入更新机制, FiberRootNode 节点, 创建根容器和更新容器
+- mount 阶段
+  - beginWork 函数, 负责在构建 Fiber 树时执行初始化工作，并开始处理工作单元
