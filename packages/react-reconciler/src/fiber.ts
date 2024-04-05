@@ -1,5 +1,5 @@
-import { Props, Key, Ref } from 'shared/ReactTypes';
-import { WorkTag } from './workTags';
+import { Props, Key, Ref, ReactElementType } from 'shared/ReactTypes';
+import { FunctionComponent, HostComponent, WorkTag } from './workTags';
 import { Flags, NoFlags } from './fiberFlags';
 import { Container } from 'hostConfig';
 
@@ -131,3 +131,31 @@ export const createWorkInProgress = (
 
 	return workInProgress; // 返回工作中的节点
 };
+
+/**
+ * 从React元素创建Fiber节点
+ * @param {ReactElementType} element React元素
+ * @returns {FiberNode} 创建的Fiber节点
+ */
+export function createFiberFromElement(element: ReactElementType): FiberNode {
+	// 从元素中提取类型、键、属性
+	const { type, key, props } = element;
+	// 初始将fiber标签设为函数组件
+	let fiberTag: WorkTag = FunctionComponent;
+
+	// 如果类型是字符串，则为原生组件
+	if (typeof type === 'string') {
+		// 如<div/> 类型: 'div'
+		fiberTag = HostComponent;
+	} else if (typeof type !== 'function' && __DEV__) {
+		// 如果类型不是函数且处于开发模式，则发出警告
+		console.warn('未定义的type类型', element);
+	}
+
+	// 创建新的Fiber节点
+	const fiber = new FiberNode(fiberTag, props, key);
+	// 将Fiber节点的标签设为类型
+	fiber.tag = type;
+	// 返回创建的Fiber节点
+	return fiber;
+}
