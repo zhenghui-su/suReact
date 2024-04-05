@@ -2,6 +2,7 @@ import path from 'path'; // 导入 Node.js 的 path 模块，用于处理文件�
 import fs from 'fs'; // 导入 Node.js 的 fs 模块，用于读取文件
 import ts from 'rollup-plugin-typescript2'; // 导入 rollup-plugin-typescript2 插件，用于处理 TypeScript 文件
 import cjs from '@rollup/plugin-commonjs'; // 导入 @rollup/plugin-commonjs 插件，用于将 CommonJS 格式的模块转换为 ES 模块
+import replace from '@rollup/plugin-replace'; // 导入 @rollup/plugin-replace 插件，用于替换代码中的变量
 
 const pkgPath = path.resolve(__dirname, '../../packages'); // 包的路径，通过 path.resolve 方法将相对路径转换为绝对路径
 const distPath = path.resolve(__dirname, '../../dist/node_modules'); // dist 目录下的 node_modules 路径，用于存放打包后的模块
@@ -33,9 +34,15 @@ export function getPackageJson(pkgName) {
 /**
  * 获取基本的 Rollup 插件数组
  * @param {Object} options - 配置选项
+ * @param {Object} options.alias - 用于确认是否是开发环境
  * @param {Object} options.typescript - typescript2 插件的配置项
  * @returns {Array} - 包含 commonjs 和 typescript2 插件的数组
  */
-export function getBaseRollupPlugins({ typescript = {} } = {}) {
-	return [cjs(), ts(typescript)]; // 返回包含 commonjs 和 typescript2 插件的数组
+export function getBaseRollupPlugins({
+	alias = {
+		__DEV__: true
+	},
+	typescript = {}
+} = {}) {
+	return [replace(alias), cjs(), ts(typescript)]; // 返回包含 commonjs 和 typescript2 插件的数组
 }
