@@ -140,3 +140,23 @@ E F G     H I J
 - `markUpdateFromFiberToRoot` 函数用于标记更新的起点，与 `workLoop.ts` 中的代码关联。
 - 这些函数都依赖于 `FiberNode`、`FiberRootNode` 类的定义，与 `fiber.ts` 中的代码关联。
 - `createContainer` 和 `updateContainer` 函数中使用了更新队列相关的方法和属性，与 `updateQueue.ts` 中的代码关联。
+
+## Mount 阶段 beginWork 的流程和书写
+
+Mount阶段的beginWork函数是React Fiber Reconciler的一部分，负责在构建Fiber树时执行初始化工作，并开始处理工作单元。以下是该阶段的流程解析：
+
+1. **参数接收：** beginWork函数接收一个参数 `wip`，代表当前正在进行工作的Fiber节点。
+2. **判断Fiber节点类型：** 使用`switch`语句检查当前节点的类型，根据不同的类型执行相应的操作。
+3. **更新HostRoot节点：** 如果当前节点是HostRoot类型，则执行以下步骤：
+   - 获取基础状态和更新队列。
+   - 处理更新队列，获取memoizedState。
+   - 更新memoizedState。
+   - 获取下一个子节点。
+   - 调用`reconcilerChildren`函数协调子节点。
+4. **更新HostComponent节点：** 如果当前节点是HostComponent类型，则执行以下步骤：
+   - 获取下一个props。
+   - 获取下一个子节点。
+   - 调用`reconcilerChildren`函数协调子节点。
+5. **协调子节点：** reconcilerChildren函数接收当前正在进行工作的Fiber节点 `wip` 和下一个子节点 `children` 作为参数，根据当前Fiber节点是否有alternate节点执行不同的逻辑：
+   - 如果有alternate节点，表示是update流程，调用`reconcileChildFibers`函数协调子节点的更新。
+   - 如果没有alternate节点，表示是mount流程，调用`mountChildFibers`函数协调子节点的挂载。
