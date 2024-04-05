@@ -33,12 +33,12 @@ export const createUpdate = <State>(action: Action<State>): Update<State> => {
  * 创建一个状态update队列对象,用于消费update
  * @returns 新创建的状态update队列对象
  */
-export const createUpdateQueue = <Action>() => {
+export const createUpdateQueue = <State>() => {
 	return {
 		shared: {
 			pending: null // 初始时，没有待处理的update
 		}
-	} as UpdateQueue<Action>;
+	} as UpdateQueue<State>;
 };
 
 /**
@@ -46,9 +46,9 @@ export const createUpdateQueue = <Action>() => {
  * @param updateQueue 要加入的update队列
  * @param update 要加入的update对象
  */
-export const enqueueUpdate = <Action>(
-	updateQueue: UpdateQueue<Action>,
-	update: Update<Action>
+export const enqueueUpdate = <State>(
+	updateQueue: UpdateQueue<State>,
+	update: Update<State>
 ) => {
 	updateQueue.shared.pending = update; // 将update放入update队列中
 };
@@ -57,7 +57,7 @@ export const enqueueUpdate = <Action>(
  * 处理update队列，返回处理后的状态
  * @param baseState 初始状态
  * @param pendingUpdate 待处理的update
- * @returns 处理后的状态对象
+ * @returns {Object} memoizedState 处理后的状态对象
  */
 export const processUpdateQueue = <State>(
 	baseState: State, // 初始状态
