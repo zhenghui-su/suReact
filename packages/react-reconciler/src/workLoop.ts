@@ -69,6 +69,11 @@ function renderRoot(root: FiberRootNode) {
 			workInProgress = null;
 		}
 	} while (true);
+	/** 完成的fiber根节点 */
+	const finishedWork = root.current.alternate;
+	root.finishedWork = finishedWork;
+	// TODO 提交更新
+	// commitRoot(root);
 }
 
 /**
