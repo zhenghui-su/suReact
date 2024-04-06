@@ -52,7 +52,7 @@ function ChildReconciler(shouldTrackSideEffects: boolean) {
 	 */
 	function placeSingleChild(fiber: FiberNode) {
 		if (shouldTrackSideEffects && fiber.alternate === null) {
-			fiber.flags = Placement;
+			fiber.flags |= Placement;
 		}
 		return fiber;
 	}
