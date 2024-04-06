@@ -37,6 +37,8 @@ export class FiberNode {
 	alternate: FiberNode | null;
 	/** 标记位，用于表示节点的状态和操作 */
 	flags: Flags;
+	/** 子树中的flags */
+	subtreeFlags: Flags;
 	/** 更新队列，用于存储状态更新 */
 	updateQueue: unknown;
 
@@ -71,6 +73,7 @@ export class FiberNode {
 
 		// 副作用 即标记位
 		this.flags = NoFlags;
+		this.subtreeFlags = NoFlags;
 	}
 }
 
@@ -121,6 +124,7 @@ export const createWorkInProgress = (
 		// 更新工作中的节点的属性为待处理的属性，并清除标记位
 		workInProgress.pendingProps = pendingProps;
 		workInProgress.flags = NoFlags;
+		workInProgress.subtreeFlags = NoFlags;
 	}
 	// 将工作中的节点的其他属性设置为当前节点的值
 	workInProgress.type = current.type;
